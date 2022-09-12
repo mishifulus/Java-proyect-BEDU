@@ -54,30 +54,15 @@ public class VisitaController {
     @PutMapping("/{visitaId}")
     public ResponseEntity<Void> actualizarVisita(@PathVariable Long visitaId, @RequestBody VisitaModel visitaModel)
     {
-        if(visitaService.obtenerVisita(visitaId).get() == null)
-        {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visita especificada no existe.");
-        }
-        else
-        {
-            visitaModel.setId(visitaId);
-            visitaService.actualizarVisita(visitaModel);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
+        visitaService.actualizarVisita(visitaModel);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{visitaId}")
     public  ResponseEntity<Void> eliminarVisita(@PathVariable Long visitaId)
     {
-        if(visitaService.obtenerVisita(visitaId).get() == null)
-        {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visita especificada no existe.");
-        }
-        else
-        {
-            visitaService.eliminarVisita(visitaId);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
+        visitaService.eliminarVisita(visitaId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/numVisitas")

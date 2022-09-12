@@ -55,32 +55,15 @@ public class EtapaController {
     @PutMapping("/{etapaId}")
     public ResponseEntity<Void> actualizarEtapa(@PathVariable Long etapaId, @Valid @RequestBody EtapaModel etapaModel)
     {
-        if(etapaService.obtenerEtapa(etapaId).get() == null)
-        {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La etapa especificada no existe.");
-        }
-        else
-        {
-            etapaModel.setEtapaId(etapaId);
-            etapaService.actualizarEtapa(etapaModel);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
-
+        etapaService.actualizarEtapa(etapaModel);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{etapaId}")
     public  ResponseEntity<Void> eliminarEtapa(@PathVariable Long etapaId)
     {
-        if(etapaService.obtenerEtapa(etapaId).get() == null)
-        {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La etapa especificada no existe.");
-        }
-        else
-        {
-            etapaService.eliminarEtapa(etapaId);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
-
+        etapaService.eliminarEtapa(etapaId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/numEtapas")

@@ -55,30 +55,15 @@ public class ClienteController {
     @PutMapping("/{clienteId}")
     public ResponseEntity<Void> actualizarCliente(@PathVariable Long clienteId, @Valid @RequestBody ClienteModel clienteModel)
     {
-        if(clienteService.obtenerCliente(clienteId).get() == null)
-        {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El cliente especificado no existe.");
-        }
-        else
-        {
-            clienteModel.setId(clienteId);
-            clienteService.actualizarCliente(clienteModel);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
+        clienteService.actualizarCliente(clienteModel);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{clienteId}")
     public  ResponseEntity<Void> eliminarCliente(@PathVariable Long clienteId)
     {
-        if(clienteService.obtenerCliente(clienteId).get() == null)
-        {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El cliente especificado no existe.");
-        }
-        else
-        {
-            clienteService.eliminarCliente(clienteId);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
+        clienteService.eliminarCliente(clienteId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/numClientes")

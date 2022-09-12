@@ -31,7 +31,8 @@ public class ClienteModelControllerTest {
 
     @Test
     void getCliente() throws Exception {
-        BDDMockito.given(clienteService.obtenerCliente(anyLong())).willReturn(Optional.of(org.bedu.postwork.model.ClienteModel.builder().id(1L).nombre("Nombre").correoContacto("cliente@contacto.com").build()));
+        BDDMockito.given(clienteService.obtenerCliente(anyLong())).willReturn(
+                Optional.of(ClienteModel.builder().id(1L).nombre("Nombre").correoContacto("cliente@contacto.com").build()));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/cliente/1")
                         .content(MediaType.APPLICATION_JSON_VALUE))
@@ -42,16 +43,16 @@ public class ClienteModelControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nombre", Matchers.is("Nombre")));
     }
 
-    /*@Test
+    @Test
     void getClientes() throws Exception {
 
-        List<ClienteModel> clienteModels = Arrays.asList(
-                org.bedu.postwork.model.ClienteModel.builder().id(1L).nombre("Nombre 1").direccion("Direccion 1").numeroEmpleados("10").correoContacto("contacto@cliente1.com").build(),
-                org.bedu.postwork.model.ClienteModel.builder().id(2L).nombre("Nombre 2").direccion("Direccion 2").numeroEmpleados("10").correoContacto("contacto@cliente2.com").build(),
-                org.bedu.postwork.model.ClienteModel.builder().id(3L).nombre("Nombre 3").direccion("Direccion 3").numeroEmpleados("10").correoContacto("contacto@cliente3.com").build()
+        List<ClienteModel> clientesModels = Arrays.asList(
+                ClienteModel.builder().id(1L).nombre("Ciente 1").direccion("Direccion 1").numeroEmpleados("10").correoContacto("contacto@cliente1.com").build(),
+                ClienteModel.builder().id(2L).nombre("Ciente 2").direccion("Direccion 2").numeroEmpleados("10").correoContacto("contacto@cliente2.com").build(),
+                ClienteModel.builder().id(3L).nombre("Ciente 3").direccion("Direccion 3").numeroEmpleados("10").correoContacto("contacto@cliente3.com").build()
         );
 
-        BDDMockito.given(clienteService.listarClientes().Clientes()).willReturn(cliente);
+        BDDMockito.given(clienteService.listarClientes()).willReturn(clientesModels);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/cliente")
                         .content(MediaType.APPLICATION_JSON_VALUE))
@@ -61,13 +62,13 @@ public class ClienteModelControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", Matchers.is(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[2].id", Matchers.is(3)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].correoContacto", Matchers.is("contacto@cliente1.com")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[2].nombre", Matchers.is("Nombre 3")));
-    }*/
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2].nombre", Matchers.is("Ciente 3")));
+    }
 
     @Test
     void creaCliente() throws Exception {
-        ClienteModel clienteModelParametro = org.bedu.postwork.model.ClienteModel.builder().nombre("Nombre").direccion("Direccion").numeroEmpleados("10").correoContacto("contacto@cliente.com").build();
-        ClienteModel clienteModelRespuesta = org.bedu.postwork.model.ClienteModel.builder().id(1L).nombre("Nombre").direccion("Direccion").numeroEmpleados("10").correoContacto("contacto@cliente.com").build();
+        ClienteModel clienteModelParametro = ClienteModel.builder().nombre("Nombre").direccion("Direccion").numeroEmpleados("10").correoContacto("contacto@cliente.com").build();
+        ClienteModel clienteModelRespuesta = ClienteModel.builder().id(1L).nombre("Nombre").direccion("Direccion").numeroEmpleados("10").correoContacto("contacto@cliente.com").build();
 
         BDDMockito.given(clienteService.guardarCliente(clienteModelParametro)).willReturn(clienteModelRespuesta);
 
@@ -85,14 +86,14 @@ public class ClienteModelControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.put("/cliente/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(clienteModelParametro)))
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void eliminaCliente() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/cliente/1")
                         .content(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
 }

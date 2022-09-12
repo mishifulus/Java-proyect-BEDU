@@ -55,30 +55,15 @@ public class VentaController{
     @PutMapping("/{ventaId}")
     public ResponseEntity<Void> actualizarVenta(@PathVariable Long ventaId, @Valid @RequestBody VentaModel ventaModel)
     {
-        if(ventaService.obtenerVenta(ventaId).get() == null)
-        {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La venta especificada no existe.");
-        }
-        else
-        {
-            ventaModel.setVentaId(ventaId);
-            ventaService.actualizarVenta(ventaModel);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
+        ventaService.actualizarVenta(ventaModel);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{ventaId}")
     public  ResponseEntity<Void> eliminarVenta(@PathVariable Long ventaId)
     {
-        if(ventaService.obtenerVenta(ventaId).get() == null)
-        {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La venta especificada no existe.");
-        }
-        else
-        {
-            ventaService.eliminarVenta(ventaId);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
+        ventaService.eliminarVenta(ventaId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/numVentas")

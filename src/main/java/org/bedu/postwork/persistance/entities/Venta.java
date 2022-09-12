@@ -25,6 +25,6 @@ public class Venta {
     @ManyToOne
     private Cliente cliente;
 
-    @Column(name = "fecha_creacion", nullable = false)
+    @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
 }

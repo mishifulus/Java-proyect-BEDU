@@ -54,30 +54,15 @@ public class ProductoController {
     @PutMapping("/{productoId}")
     public ResponseEntity<Void> actualizarProducto(@PathVariable Long productoId, @RequestBody ProductoModel productoModel)
     {
-        if(productoService.obtenerProducto(productoId).get() == null)
-        {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El producto especificado no existe.");
-        }
-        else
-        {
-            productoModel.setId(productoId);
-            productoService.actualizarProducto(productoModel);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
+        productoService.actualizarProducto(productoModel);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{productoId}")
     public  ResponseEntity<Void> eliminarProducto(@PathVariable Long productoId)
     {
-        if(productoService.obtenerProducto(productoId).get() == null)
-        {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El producto especificado no existe.");
-        }
-        else
-        {
-            productoService.eliminarProducto(productoId);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
+        productoService.eliminarProducto(productoId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/numProductos")
