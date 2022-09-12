@@ -9,6 +9,7 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -22,6 +23,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 
+@AutoConfigureRestDocs
 @WebMvcTest(VentaController.class)
 public class VentaModelControllerTest {
 
@@ -94,6 +96,7 @@ public class VentaModelControllerTest {
         List<ProductoModel> listproductos = Arrays.asList(productoParametro1,productoParametro2);
 
         VentaModel ventaModelParametro = VentaModel.builder().ventaId(1L).monto(10.0F).clienteModel(clienteParametro).productoModels(listproductos).build();
+        //VentaModel ventaModelParametro = VentaModel.builder().ventaId(1L).monto(10.0F).build();
 
         mockMvc.perform(MockMvcRequestBuilders.put("/venta/1")
                         .contentType(MediaType.APPLICATION_JSON)

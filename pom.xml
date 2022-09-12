@@ -98,7 +98,6 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
 				<artifactId>asciidoctor-maven-plugin</artifactId>
@@ -112,6 +111,10 @@
 						</goals>
 						<configuration>
 							<backend>html</backend>
+							<sourceDocumentName>index.adoc</sourceDocumentName>
+							<attributes>
+								<snippets>${project.build.directory}/generated-snippets</snippets>
+							</attributes>
 							<sourceDirectory>src/docs/asciidocs</sourceDirectory>
 							<outputDirectory>target/generated-docs</outputDirectory>
 						</configuration>
@@ -121,11 +124,10 @@
 					<dependency>
 						<groupId>org.springframework.restdocs</groupId>
 						<artifactId>spring-restdocs-asciidoctor</artifactId>
-						<version>1.5.8</version>
+						<version>${spring-restdocs.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
