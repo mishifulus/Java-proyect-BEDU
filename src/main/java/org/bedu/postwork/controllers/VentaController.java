@@ -1,7 +1,7 @@
 package org.bedu.postwork.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.bedu.postwork.model.Venta;
+import org.bedu.postwork.model.VentaModel;
 import org.bedu.postwork.services.VentaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +21,9 @@ public class VentaController{
     private final VentaService ventaService;
 
     @GetMapping("/{ventaId}")
-    public ResponseEntity<Venta> getVenta(@PathVariable Long ventaId)
+    public ResponseEntity<VentaModel> getVenta(@PathVariable Long ventaId)
     {
-        Optional<Venta> ventaDb = ventaService.obtenerVenta(ventaId);
+        Optional<VentaModel> ventaDb = ventaService.obtenerVenta(ventaId);
 
         if (ventaDb.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La venta especificada no existe.");
@@ -33,9 +33,9 @@ public class VentaController{
     }
 
     @GetMapping
-    public  ResponseEntity<List<Venta>> getVentas()
+    public  ResponseEntity<List<VentaModel>> getVentas()
     {
-        List<Venta> ventasDb = ventaService.listarVentas();
+        List<VentaModel> ventasDb = ventaService.listarVentas();
 
         if(ventasDb.isEmpty())
         {
@@ -45,25 +45,40 @@ public class VentaController{
     }
 
     @PostMapping
-    public ResponseEntity<Void> crearVenta(@Valid @RequestBody Venta venta)
+    public ResponseEntity<Void> crearVenta(@Valid @RequestBody VentaModel ventaModel)
     {
-        Venta ventaNueva = ventaService.guardarVenta(venta);
+        VentaModel ventaModelNueva = ventaService.guardarVenta(ventaModel);
 
-        return ResponseEntity.created(URI.create(String.valueOf(ventaNueva.getVentaId()))).build();
+        return ResponseEntity.created(URI.create(String.valueOf(ventaModelNueva.getVentaId()))).build();
     }
 
     @PutMapping("/{ventaId}")
-    public ResponseEntity<Void> actualizarVenta(@PathVariable Long ventaId, @Valid @RequestBody Venta venta)
+    public ResponseEntity<Void> actualizarVenta(@PathVariable Long ventaId, @Valid @RequestBody VentaModel ventaModel)
     {
-        ventaService.actualizarVenta(venta);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        if(ventaService.obtenerVenta(ventaId).get() == null)
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La venta especificada no existe.");
+        }
+        else
+        {
+            ventaModel.setVentaId(ventaId);
+            ventaService.actualizarVenta(ventaModel);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
     }
 
     @DeleteMapping("/{ventaId}")
     public  ResponseEntity<Void> eliminarVenta(@PathVariable Long ventaId)
     {
-        ventaService.eliminarVenta(ventaId);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        if(ventaService.obtenerVenta(ventaId).get() == null)
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La venta especificada no existe.");
+        }
+        else
+        {
+            ventaService.eliminarVenta(ventaId);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
     }
 
     @GetMapping("/numVentas")

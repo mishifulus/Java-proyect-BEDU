@@ -2,7 +2,7 @@ package org.bedu.postwork.services;
 
 import lombok.RequiredArgsConstructor;
 import org.bedu.postwork.controllers.mappers.VisitaMapper;
-import org.bedu.postwork.model.Visita;
+import org.bedu.postwork.model.VisitaModel;
 import org.bedu.postwork.persistance.VisitaRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +17,20 @@ public class VisitaService {
     private final VisitaRepository repository;
     private final VisitaMapper mapper;
 
-    public Visita guardarVisita(Visita visita)
+    public VisitaModel guardarVisita(VisitaModel visitaModel)
     {
         return mapper.visitaRepositoryToVisitaModel(
-                repository.save(mapper.visitaModelToVisitaRepository(visita))
+                repository.save(mapper.visitaModelToVisitaRepository(visitaModel))
         );
     }
 
-    public List<Visita> listarVisitas()
+    public List<VisitaModel> listarVisitas()
     {
-        return repository.findAll().stream().map(visita -> mapper.visitaRepositoryToVisitaModel(visita)).collect(Collectors.toList());
+        return repository.findAll().stream().map(visita ->
+                mapper.visitaRepositoryToVisitaModel(visita)).collect(Collectors.toList());
     }
 
-    public Optional<Visita> obtenerVisita(long idVisita)
+    public Optional<VisitaModel> obtenerVisita(long idVisita)
     {
         return  repository.findById(idVisita)
                 .map(visita -> Optional.of(mapper.visitaRepositoryToVisitaModel(visita)))
@@ -41,9 +42,10 @@ public class VisitaService {
         repository.deleteById(idVisita);
     }
 
-    public Visita actualizarVisita(Visita visita)
+    public VisitaModel actualizarVisita(VisitaModel visitaModel)
     {
-        return mapper.visitaRepositoryToVisitaModel(repository.save(mapper.visitaModelToVisitaRepository(visita)));
+        return mapper.visitaRepositoryToVisitaModel(
+                repository.save(mapper.visitaModelToVisitaRepository(visitaModel)));
     }
 
     public long contarVisitas()

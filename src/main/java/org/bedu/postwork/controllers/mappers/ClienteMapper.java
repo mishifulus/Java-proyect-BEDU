@@ -1,12 +1,13 @@
 package org.bedu.postwork.controllers.mappers;
 
-import org.bedu.postwork.model.Cliente;
+import org.bedu.postwork.model.ClienteModel;
+import org.bedu.postwork.persistance.entities.Cliente;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
 
-    Cliente clienteRepositoryToClienteModel(org.bedu.postwork.persistance.entities.Cliente clienteRepository);
+    ClienteModel clienteRepositoryToClienteModel(Cliente clienteRepository);
 
-    org.bedu.postwork.persistance.entities.Cliente clienteModelToClienteRepository(Cliente clienteModel);
+    Cliente clienteModelToClienteRepository(ClienteModel clienteModel);
 }

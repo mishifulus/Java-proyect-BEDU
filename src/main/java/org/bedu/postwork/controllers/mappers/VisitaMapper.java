@@ -1,12 +1,13 @@
 package org.bedu.postwork.controllers.mappers;
 
-import org.bedu.postwork.model.Visita;
+import org.bedu.postwork.model.VisitaModel;
+import org.bedu.postwork.persistance.entities.Visita;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface VisitaMapper {
 
-    Visita visitaRepositoryToVisitaModel (org.bedu.postwork.persistance.entities.Visita visitaRepository);
+    VisitaModel visitaRepositoryToVisitaModel (Visita visitaRepository);
 
-    org.bedu.postwork.persistance.entities.Visita visitaModelToVisitaRepository (Visita visitaModel);
+    Visita visitaModelToVisitaRepository (VisitaModel visitaModel);
 }

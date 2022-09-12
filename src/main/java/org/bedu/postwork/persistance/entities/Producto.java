@@ -16,21 +16,18 @@ import java.time.LocalDate;
 public class Producto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
     private String nombre;
 
-    @Column(nullable = false)
     private String categoria;
 
-    @Column(nullable = false)
     private float precio;
 
-    @Column(name = "numero_registro", nullable = false, length = 20)
+    @Column(name = "numero_registro", length = 20)
     private String numeroRegistro;
 
-    @Column(name = "fecha_creacion", nullable = false)
+    @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;
 }

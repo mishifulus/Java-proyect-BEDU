@@ -2,7 +2,7 @@ package org.bedu.postwork.services;
 
 import lombok.RequiredArgsConstructor;
 import org.bedu.postwork.controllers.mappers.ProductoMapper;
-import org.bedu.postwork.model.Producto;
+import org.bedu.postwork.model.ProductoModel;
 import org.bedu.postwork.persistance.ProductoRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +17,20 @@ public class ProductoService {
     private final ProductoRepository repository;
     private final ProductoMapper mapper;
 
-    public Producto guardarProducto(Producto producto)
+    public ProductoModel guardarProducto(ProductoModel productoModel)
     {
         return mapper.productoRepositoryToProductoModel(
-                repository.save(mapper.productoModelToProductoRepository(producto))
+                repository.save(mapper.productoModelToProductoRepository(productoModel))
         );
     }
 
-    public List<Producto> listarProductos()
+    public List<ProductoModel> listarProductos()
     {
-        return repository.findAll().stream().map(producto -> mapper.productoRepositoryToProductoModel(producto)).collect(Collectors.toList());
+        return repository.findAll().stream().map(producto ->
+                mapper.productoRepositoryToProductoModel(producto)).collect(Collectors.toList());
     }
 
-    public Optional<Producto> obtenerProducto(long idProducto)
+    public Optional<ProductoModel> obtenerProducto(long idProducto)
     {
         return  repository.findById(idProducto)
                 .map(producto -> Optional.of(mapper.productoRepositoryToProductoModel(producto)))
@@ -41,9 +42,10 @@ public class ProductoService {
         repository.deleteById(idProducto);
     }
 
-    public Producto actualizarProducto(Producto producto)
+    public ProductoModel actualizarProducto(ProductoModel productoModel)
     {
-        return mapper.productoRepositoryToProductoModel(repository.save(mapper.productoModelToProductoRepository(producto)));
+        return mapper.productoRepositoryToProductoModel(
+                repository.save(mapper.productoModelToProductoRepository(productoModel)));
     }
 
     public long contarProductos()

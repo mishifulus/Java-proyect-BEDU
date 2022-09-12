@@ -1,27 +1,22 @@
 package org.bedu.postwork.persistance.entities;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.bedu.postwork.model.Cliente;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Data
-@Table(name = "VISITA")
+@Table(name = "VISITAS")
 @Entity
 @NoArgsConstructor
 public class Visita {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_fk", referencedColumnName = "id")
     private Cliente cliente;
 
     @Column(name = "fecha_programada", nullable = false)

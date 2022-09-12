@@ -11,8 +11,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @Builder
-@RequiredArgsConstructor
-public class Etapa {
+public class EtapaModel {
 
     @PositiveOrZero(message = "El identificador de la etapa no puede ser un número negativo")
     private long etapaId;
@@ -22,6 +21,6 @@ public class Etapa {
     private String nombre;
 
     @Positive(message = "La etapa debe tener un orden positivo mayor a cero")
-    @NotEmpty(message = "La orden de la etapa no puede estar en blanco.")
+    //@NotEmpty(message = "La orden de la etapa no puede estar en blanco.")
     private int orden;
 }

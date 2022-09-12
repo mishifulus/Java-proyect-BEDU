@@ -9,14 +9,13 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@RequiredArgsConstructor
-public class Visita {
+public class VisitaModel {
 
     @PositiveOrZero(message = "El identificador de la visita no puede ser un número negativo.")
     private long id;
 
     @NotNull(message = "La visita debe haberse realizado a algún cliente.")
-    private Cliente cliente;
+    private ClienteModel clienteModel;
 
     @Future(message = "La fecha de la cita no puede ser en una fecha en el pasado.")
     private LocalDateTime fechaProgramada;

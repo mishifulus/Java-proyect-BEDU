@@ -2,8 +2,8 @@ package org.bedu.postwork.services;
 
 import lombok.RequiredArgsConstructor;
 import org.bedu.postwork.controllers.mappers.ClienteMapper;
+import org.bedu.postwork.model.ClienteModel;
 import org.bedu.postwork.persistance.ClienteRepository;
-import org.bedu.postwork.model.Cliente;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,19 +17,20 @@ public class ClienteService {
     private final ClienteRepository repository;
     private final ClienteMapper mapper;
 
-    public Cliente guardarCliente(Cliente cliente)
+    public ClienteModel guardarCliente(ClienteModel clienteModel)
     {
         return mapper.clienteRepositoryToClienteModel(
-                repository.save(mapper.clienteModelToClienteRepository(cliente))
+                repository.save(mapper.clienteModelToClienteRepository(clienteModel))
         );
     }
 
-    public List<Cliente> listarClientes()
+    public List<ClienteModel> listarClientes()
     {
-        return repository.findAll().stream().map(cliente -> mapper.clienteRepositoryToClienteModel(cliente)).collect(Collectors.toList());
+        return repository.findAll().stream().map(cliente ->
+                mapper.clienteRepositoryToClienteModel(cliente)).collect(Collectors.toList());
     }
 
-    public Optional<Cliente> obtenerCliente(long idCliente)
+    public Optional<ClienteModel> obtenerCliente(long idCliente)
     {
         return  repository.findById(idCliente)
                 .map(cliente -> Optional.of(mapper.clienteRepositoryToClienteModel(cliente)))
@@ -41,9 +42,10 @@ public class ClienteService {
         repository.deleteById(idCliente);
     }
 
-    public Cliente actualizarCliente(Cliente cliente)
+    public ClienteModel actualizarCliente(ClienteModel clienteModel)
     {
-        return mapper.clienteRepositoryToClienteModel(repository.save(mapper.clienteModelToClienteRepository(cliente)));
+        return mapper.clienteRepositoryToClienteModel(
+                repository.save(mapper.clienteModelToClienteRepository(clienteModel)));
     }
 
     public long contarClientes()

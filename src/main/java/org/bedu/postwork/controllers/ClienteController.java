@@ -1,7 +1,7 @@
 package org.bedu.postwork.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.bedu.postwork.model.Cliente;
+import org.bedu.postwork.model.ClienteModel;
 import org.bedu.postwork.services.ClienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +21,9 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     @GetMapping("/{clienteId}")
-    public ResponseEntity<Cliente> getCliente(@PathVariable Long clienteId)
+    public ResponseEntity<ClienteModel> getCliente(@PathVariable Long clienteId)
     {
-        Optional<Cliente> clienteDb = clienteService.obtenerCliente(clienteId);
+        Optional<ClienteModel> clienteDb = clienteService.obtenerCliente(clienteId);
 
         if (clienteDb.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El cliente especificado no existe.");
@@ -33,9 +33,9 @@ public class ClienteController {
     }
 
     @GetMapping
-    public  ResponseEntity<List<Cliente>> getClientes()
+    public  ResponseEntity<List<ClienteModel>> getClientes()
     {
-        List<Cliente> clientesDb = clienteService.listarClientes();
+        List<ClienteModel> clientesDb = clienteService.listarClientes();
 
         if(clientesDb.isEmpty())
         {
@@ -45,25 +45,40 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> crearCliente(@Valid @RequestBody Cliente cliente)
+    public ResponseEntity<Void> crearCliente(@Valid @RequestBody ClienteModel clienteModel)
     {
-        Cliente clienteNuevo = clienteService.guardarCliente(cliente);
+        ClienteModel clienteModelNuevo = clienteService.guardarCliente(clienteModel);
 
-        return ResponseEntity.created(URI.create(String.valueOf(clienteNuevo.getId()))).build();
+        return ResponseEntity.created(URI.create(String.valueOf(clienteModelNuevo.getId()))).build();
     }
 
     @PutMapping("/{clienteId}")
-    public ResponseEntity<Void> actualizarCliente(@PathVariable Long clienteId, @Valid @RequestBody Cliente cliente)
+    public ResponseEntity<Void> actualizarCliente(@PathVariable Long clienteId, @Valid @RequestBody ClienteModel clienteModel)
     {
-        clienteService.actualizarCliente(cliente);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        if(clienteService.obtenerCliente(clienteId).get() == null)
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El cliente especificado no existe.");
+        }
+        else
+        {
+            clienteModel.setId(clienteId);
+            clienteService.actualizarCliente(clienteModel);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
     }
 
     @DeleteMapping("/{clienteId}")
     public  ResponseEntity<Void> eliminarCliente(@PathVariable Long clienteId)
     {
-        clienteService.eliminarCliente(clienteId);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        if(clienteService.obtenerCliente(clienteId).get() == null)
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El cliente especificado no existe.");
+        }
+        else
+        {
+            clienteService.eliminarCliente(clienteId);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
     }
 
     @GetMapping("/numClientes")

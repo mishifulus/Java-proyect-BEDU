@@ -1,11 +1,8 @@
 package org.bedu.postwork.services;
 
 import lombok.RequiredArgsConstructor;
-import org.bedu.postwork.controllers.mappers.ClienteMapper;
 import org.bedu.postwork.controllers.mappers.VentaMapper;
-import org.bedu.postwork.model.Cliente;
-import org.bedu.postwork.model.Venta;
-import org.bedu.postwork.persistance.ClienteRepository;
+import org.bedu.postwork.model.VentaModel;
 import org.bedu.postwork.persistance.VentaRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,19 +17,20 @@ public class VentaService {
     private final VentaRepository repository;
     private final VentaMapper mapper;
 
-    public Venta guardarVenta(Venta venta)
+    public VentaModel guardarVenta(VentaModel ventaModel)
     {
         return mapper.ventaRepositoryToVentaModel(
-                repository.save(mapper.ventaModelToVentaRepository(venta))
+                repository.save(mapper.ventaModelToVentaRepository(ventaModel))
         );
     }
 
-    public List<Venta> listarVentas()
+    public List<VentaModel> listarVentas()
     {
-        return repository.findAll().stream().map(venta -> mapper.ventaRepositoryToVentaModel(venta)).collect(Collectors.toList());
+        return repository.findAll().stream().map(venta ->
+                mapper.ventaRepositoryToVentaModel(venta)).collect(Collectors.toList());
     }
 
-    public Optional<Venta> obtenerVenta(long idVenta)
+    public Optional<VentaModel> obtenerVenta(long idVenta)
     {
         return  repository.findById(idVenta)
                 .map(venta -> Optional.of(mapper.ventaRepositoryToVentaModel(venta)))
@@ -44,9 +42,10 @@ public class VentaService {
         repository.deleteById(idVenta);
     }
 
-    public Venta actualizarVenta(Venta venta)
+    public VentaModel actualizarVenta(VentaModel ventaModel)
     {
-        return mapper.ventaRepositoryToVentaModel(repository.save(mapper.ventaModelToVentaRepository(venta)));
+        return mapper.ventaRepositoryToVentaModel(
+                repository.save(mapper.ventaModelToVentaRepository(ventaModel)));
     }
 
     public long contarVentas()
