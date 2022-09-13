@@ -1,3 +1,5 @@
-Oscar Arturo
-Juana Citlalli Martinez Medina
-Karen Aide Narvaez
+García Ibarra Arturo
+Martínez Medina Juana Citlalli
+Návarez Espinoza Karen Aidé
+
+CRM with Java
