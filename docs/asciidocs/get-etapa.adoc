@@ -1,0 +1,17 @@
+[[etapas]]
+== Etapas
+
+=== Get etapa por Id
+Obtiene una etapa específica usando su identificador único.
+
+==== Ejemplo de petición
+include::{snippets}/etapa/get-etapa/http-request.adoc[]
+
+==== Parámetros de la petición
+include::{snippets}/etapa/get-etapa/path-parameters.adoc[]
+
+==== Ejemplo de respuesta
+include::{snippets}/etapa/get-etapa/http-response.adoc[]
+
+==== Ejemplo usando CURL
+include::{snippets}/etapa/get-etapa/curl-request.adoc[]
